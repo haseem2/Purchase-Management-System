@@ -1,0 +1,46 @@
+#ItemTableForm{
+	float: left!important;
+    width: 70%;
+	padding: 20px;
+	background-color:#fff;
+	border: 1px solid #ccc;
+} 
+#GrandTotalTable{
+	float: right!important;
+    width: 28%;
+	padding: 20px;
+	border: 1px solid #ccc;
+	background-color:#fff;
+	margin-top:-75px!important;
+}
+#Suplier-name{
+	float: right!important;
+	width: 49%;
+}
+
+
+
+#Item-code{
+	float: left!important;
+     width: 49%;
+	padding-top: 20px;
+	/* margin-top:50px;
+	padding: 20px;
+	background-color:#fff;
+	border: 1px solid #ccc; */ 
+}
+
+#ItemTable {
+    float: left!important;
+    width: 70%;
+}
+
+#TableBody{
+	width: 100%;
+	//padding:20px!important;
+	//margin:20px!important;
+	
+}
+#grandTotal, #NoOfItems{
+	float: right!important;
+}

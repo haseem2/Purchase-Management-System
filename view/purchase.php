@@ -5,6 +5,11 @@ if (!isset($_SESSION['uid'])){
 	header("location:index.php");
 	exit;
 }
+require_once '../config/dbconn.php';
+/* $result=mysqli_query($conn, "SELECT DISTINCT item_id from item ORDER BY item_id");
+while ($row = mysqli_fetch_assoc($result)) {
+	$item_id_array[]=  $row['item_id']; 
+}*/
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -17,6 +22,7 @@ if (!isset($_SESSION['uid'])){
         <link rel="stylesheet" href="../assets/css/jquery.dataTables.css" type="text/css" media="screen" title="default" />
 		<link rel="stylesheet" href="../assets/css/bootstrap.min.css" type="text/css"  />
 		<link rel="stylesheet" href="../assets/css/homestyle.css" type="text/css"  />
+        <link rel="stylesheet" href="../assets/css/PurchaseStyle.css" type="text/css"  />
         <script src="../assets/js/admin/jquery-1.4.1.min.js" type="text/javascript"></script>
 
         <!--  checkbox styling script -->
@@ -31,6 +37,7 @@ if (!isset($_SESSION['uid'])){
         <script src="../assets/js/admin/jquery.tooltip.js" type="text/javascript"></script>
         <script src="../assets/js/admin/jquery.dimensions.js" type="text/javascript"></script>
         <script type="text/javascript">
+
 		
 		
 		
@@ -66,6 +73,7 @@ if (!isset($_SESSION['uid'])){
                     var x = document.createElement("INPUT");
 					x.setAttribute("onkeypress", "ItemCodeInput()");
                     x.setAttribute("type", "text");
+                    x.setAttribute("class", "form-control");
                     x.setAttribute("name", ItemCodeId);
                     x.setAttribute("value", ItemCode);
                     col1.appendChild(x);
@@ -74,6 +82,7 @@ if (!isset($_SESSION['uid'])){
                     var col2 = document.createElement('td');
                     var x = document.createElement("INPUT");
                     x.setAttribute("type", "number");
+					x.setAttribute("class", "form-control");
                     x.setAttribute("name", price);
                     x.setAttribute("id", price);
                     x.setAttribute("placeholder", "Enter the price");
@@ -85,6 +94,7 @@ if (!isset($_SESSION['uid'])){
                     var col3 = document.createElement('td');
                     var x = document.createElement("INPUT");
                     x.setAttribute("type", "number");
+					x.setAttribute("class", "form-control");
                     x.setAttribute("name", qty);
                     x.setAttribute("id", qty);
                     x.setAttribute("placeholder", "Enter the Qty.");
@@ -96,6 +106,7 @@ if (!isset($_SESSION['uid'])){
                     var col4 = document.createElement('td');
                     var x = document.createElement("INPUT");
                     x.setAttribute("type", "number");
+					x.setAttribute("class", "form-control");
                     x.setAttribute("name", total);
                     x.setAttribute("id", total);
                     x.setAttribute("placeholder", "");
@@ -128,7 +139,9 @@ if (!isset($_SESSION['uid'])){
                     var Qty = document.getElementById(qty).value;
                     var Total = Price * Qty;
                     document.getElementById(total).value = Total;
+					document.getElementById("NoOfItems").innerHTML = NoOfRow;
 					NoOfRow++;
+
 					
                     grandTotal();
                 }
@@ -149,7 +162,7 @@ if (!isset($_SESSION['uid'])){
                     GTotal += parseFloat(document.getElementById("total" + rownum).value);
 
                 }
-                document.getElementById("grandTotal").innerHTML = GTotal;
+                document.getElementById("grandTotal").innerHTML = "Rs. " + GTotal;
 
 				
             }
@@ -247,16 +260,6 @@ if (!isset($_SESSION['uid'])){
 								<a href="report.php"><b>Report</b></a>
 							</li>
                         </ul>
-                        
-						<!--ul class="select">
-							<li><a href="../views/home.php" target="_blank"><b>NeuronHost</b></a></li>
-                        </ul>
-						 <ul class="select">
-							<li><a href="phpinfo().php"><b>phpinfo()</b></a></li>
-                        </ul>
-						<ul  class="select">
-							<li><a href="upload.php"><b>Upload ZIP File</b></a></li>
-                        </ul-->
                         <div class="clear"></div>
                     </div>
                     <div class="clear"></div>
@@ -266,23 +269,45 @@ if (!isset($_SESSION['uid'])){
 <br><br>
 
 <!--form action="../model/VoucherModel.php" method="post"-->
-		<form>
-        <input type="text" id="Item-code" onfocus="this.value = ''" onkeypress="additems(event)" placeholder="Enter Item Code">
-        <table id="ItemTable" border="1">
+		<form id="">
+		<div id="ItemTableForm">
+		<input type="text" id="Item-code"  class="form-control" onfocus="this.value = ''" onkeypress="additems(event)" placeholder="Enter Item Code" />
+		<input type="text" id="Suplier-name"  class="form-control" placeholder="Enter Suplier Name" required />
+		</div>
+
+		<table id="ItemTable" border="1">
+		<!-- Rohan grand total not working if I put the heading so I cometed the line please correct the error and erace comment -->
+		
+			<!--tr><th width="25%">Item Code</th><th width="25%">Price</th><th width="25%">Quantity</th><th width="25%">Total</th></tr-->
 			
         </table>
-        <table>
+		<div id="GrandTotalTable">
+        <table id="TableBody">
+		
+		
             <tr>
                 <td>GRAND TOTAL</td>
                 <td>:</td>
-                <td><div id="grandTotal">0.00</div></td>
+                <td><div id="grandTotal">Rs. 0.00</div></td>
             </tr>
 			<tr>
-			<td><input type="submit" name="Submit"></input></td>
-			<td><input type="reset" name="Reset"></input></td>
+                <td>TOTAL NO OF ITEMS</td>
+                <td>:</td>
+                <td><div id="NoOfItems">00</div></td>
+            </tr>
+			<tr>
+			<td>&nbsp;&nbsp;&nbsp;</td>
+			 <td>&nbsp;&nbsp;&nbsp;</td>
+			<td>&nbsp;&nbsp;&nbsp;</td>
 			</tr>
+			<tr>
+			<td><button class="btn btn-block btn-success" type="submit" name="Submit">Save</button></td>
+			 <td>&nbsp;&nbsp;&nbsp;</td>
+			<td><button class="btn btn-block btn-danger" type="reset" name="Reset">Cancel</button></td>
+			</tr>
+		
         </table>
-
+		</div>	
 		</form>
     </body>
 
@@ -301,7 +326,7 @@ if (!isset($_SESSION['uid'])){
             <!--  start footer-left -->
             <div id="footer-left">
 
-                Admin Panel &copy; Altec IT Solutions <span id="spanYear"></span> <a href=""></a>. All rights reserved.</div>
+            Copy Right &copy; Altec IT Solutions <span id="spanYear"></span> <a href=""></a> All rights reserved.</div>
             <!--  end footer-left -->
             <div class="clear">&nbsp;</div>
         </div>
