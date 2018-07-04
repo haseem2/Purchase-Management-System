@@ -10,8 +10,8 @@ require_once '../config/dbconn.php';
 
 /* $result=mysqli_query($conn, "SELECT DISTINCT item_id from item ORDER BY item_id");
 while ($row = mysqli_fetch_assoc($result)) {
-	$item_id_array[]=  $row['item_id'];  */
-}
+	$item_id_array[]=  $row['item_id'];  
+}*/
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
